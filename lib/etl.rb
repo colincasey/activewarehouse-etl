@@ -33,13 +33,16 @@ require 'rubygems'
 
 unless defined?(REXML::VERSION)
   require 'rexml/rexml'
-  REXML::VERSION = REXML::Version
+  #REXML::VERSION = REXML::Version
 end
 
 require 'active_support'
 require 'active_record'
 require 'adapter_extensions'
 require 'faster_csv'
+
+gem 'colincasey-sequel', ">= 2.10.4"
+require 'sequel'
 
 $:.unshift(File.dirname(__FILE__))
 
