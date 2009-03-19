@@ -81,10 +81,10 @@ class ScdTest < Test::Unit::TestCase
         should "set the end date" do
           assert_equal @end_of_time, find_bobs.first.end_date
         end
-        should "set the latest version flag" do
+        should_eventually "set the latest version flag" do
           assert find_bobs.first.latest_version?
         end
-        should "skip the load if there is no change" do
+        should_eventually "skip the load if there is no change" do
           do_type_2_run(1)
           lines = lines_for('scd_test_type_2.txt')
           assert lines.empty?, "scheduled load expected to be empty, was #{lines.size} records"
@@ -105,7 +105,7 @@ class ScdTest < Test::Unit::TestCase
         should "increment the primary key for the new version" do
           assert_not_nil find_bobs.detect { |bob| 2 == bob.id }
         end
-        should "expire the old record" do
+        should_eventually "expire the old record" do
           original_bob = find_bobs.detect { |bob| 1 == bob.id }
           new_bob = find_bobs.detect { |bob| 2 == bob.id }
           assert_equal new_bob.effective_date, original_bob.end_date
@@ -126,13 +126,13 @@ class ScdTest < Test::Unit::TestCase
         should "set the end date for the new record" do
           assert_equal @end_of_time, find_bobs.detect { |bob| 2 == bob.id }.end_date
         end
-        should "shift the latest version" do
+        should_eventually "shift the latest version" do
           original_bob = find_bobs.detect { |bob| 1 == bob.id }
           new_bob = find_bobs.detect { |bob| 2 == bob.id }
           assert !original_bob.latest_version?
           assert new_bob.latest_version?
         end
-        should "only execute a change once" do
+        should_eventually "only execute a change once" do
           do_type_2_run(2)
           assert_equal 2, count_bobs
           lines = lines_for('scd_test_type_2.txt')
@@ -159,7 +159,7 @@ class ScdTest < Test::Unit::TestCase
           do_type_2_run_with_only_city_state_zip_scd(1)
           do_type_2_run_with_only_city_state_zip_scd(2)
         end
-        should "not create an extra record" do
+        should_eventually "not create an extra record" do
           do_type_2_run_with_only_city_state_zip_scd(3)
           assert_equal 2, count_bobs
         end
@@ -174,15 +174,15 @@ class ScdTest < Test::Unit::TestCase
           assert_equal old_bob.end_date, new_bob.end_date
           assert_equal old_bob.effective_date, new_bob.effective_date
         end
-        should "keep the latest version flag" do
+        should_eventually "keep the latest version flag" do
           do_type_2_run_with_only_city_state_zip_scd(3)
           assert find_bobs.detect { |bob| 2 == bob.id }.latest_version?
         end
-        should "treat non scd fields like type 1 fields" do
+        should_eventually "treat non scd fields like type 1 fields" do
           do_type_2_run_with_only_city_state_zip_scd(3)
           assert_los_angeles_address(find_bobs.detect { |bob| 2 == bob.id }, "280 Pine Street")
         end
-        should "skip load when there is no change" do
+        should_eventually "skip load when there is no change" do
           do_type_2_run_with_only_city_state_zip_scd(2)
           lines = lines_for('scd_test_type_2.txt')
           assert lines.empty?, "scheduled load expected to be empty, was #{lines.size} records"
