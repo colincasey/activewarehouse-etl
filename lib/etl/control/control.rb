@@ -41,6 +41,15 @@ module ETL #:nodoc:
       def dependencies
         control.dependencies
       end
+
+      def context(context_helper)
+        case context_helper
+        when String, Symbol
+          extend("#{context_helper.to_s.camelize}Context".constantize)
+        when Module
+          extend(context_helper)
+        end
+      end
       
       # Define a source.
       def source(name, configuration={}, definition={})
