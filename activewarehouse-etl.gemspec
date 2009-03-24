@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{activewarehouse-etl}
-  s.version = "0.9.3"
+  s.version = "0.9.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Anthony Eden"]
-  s.date = %q{2009-03-23}
+  s.date = %q{2009-03-24}
   s.default_executable = %q{etl}
   s.description = %q{ActiveWarehouse ETL is a pure Ruby Extract-Transform-Load application for loading data into a database.}
   s.email = %q{casey.colin@gmail.com}
