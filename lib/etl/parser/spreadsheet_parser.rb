@@ -63,6 +63,13 @@ module ETL #:nodoc:
       def fields
         @fields ||= []
       end
+
+      protected
+      def file
+        path = Pathname.new(source.file)
+        path = path.absolute? ? path : Pathname.new(File.dirname(source.control.file)) + path
+        path
+      end
       
       private
       def validate_row(row, line, file)
