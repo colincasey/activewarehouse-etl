@@ -19,7 +19,7 @@ begin
     gem.add_dependency('fastercsv',          '>= 1.2.0')
     gem.add_dependency('adapter_extensions', '>= 0.5.0')
     gem.add_dependency('roo',                '>= 1.2.3')
-    gem.add_dependency('colincasey-sequel',  '>= 2.10.4')
+    gem.add_dependency('sequel',  '>= 2.10.4')
 
     gem.files = FileList["CHANGELOG", "LICENSE", "README", "TODO", "Rakefile", "VERSION.yml", "bin/**/*", "lib/**/*"]
     gem.require_path = 'lib'
